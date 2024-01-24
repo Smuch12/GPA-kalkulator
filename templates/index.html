@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="no">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>GPA kalkulator</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="text-center display-3">GPA kalkulator</h1>
+    </header>
+    <main>
+        <table id="gradeTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Emnekode</th>
+                    <th scope="col">Emnenavn</th>
+                    <th scope="col">karakter</th>
+                    <th scope="col">Semester</th>
+                    <th scope="col">Studiepoeng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>a</td>
+                    <td>b</td>
+                    <td>c</td>
+                    <td>d</td>
+                    <td>e</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="text-center">
+            <div class="btn-group" role="group">
+                <button id="addButton" type="button" class="btn btn-success">Legg til</button>
+                <button id="editButton" type="button" class="btn btn-primary">Endre</button>
+                <button id="removeButton" type="button" class="btn btn-danger">Fjern</button>
+            </div>
+        </div>
+
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+table.table {
+    width: 60%; 
+    margin: auto;
+    font-size: 0.9em; 
+}
+
+table.table th,
+table.table td {
+    padding: 8px;
+    text-align: center; 
+}
+
+table.table thead th {
+    font-size: 1em; 
+}
