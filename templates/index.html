@@ -22,20 +22,24 @@
                     <th scope="col">Emnekode</th>
                     <th scope="col">Emnenavn</th>
                     <th scope="col">karakter</th>
-                    <th scope="col">Semester</th>
                     <th scope="col">Studiepoeng</th>
+                    <th scope="col">Dato</th>
+                    
                 </tr>
             </thead>
             <tbody>
+                {% for row in rows %}
                 <tr>
-                    <td>a</td>
-                    <td>b</td>
-                    <td>c</td>
-                    <td>d</td>
-                    <td>e</td>
+                    <td><b>{{ row['Emnekode'] }}</b></td>
+                    <td>{{ row['Emnenavn'] }}</td>
+                    <td>{{ row['karakter'] }}</td>
+                    <td>{{ row['Studiepoeng'] }}</td>
+                    <td>{{ row['Dato'] }}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
+        <!-- TODO: implement buttons
         <br>
         <div class="text-center">
             <div class="btn-group" role="group">
@@ -44,7 +48,7 @@
                 <button id="removeButton" type="button" class="btn btn-danger">Fjern</button>
             </div>
         </div>
-
+        -->
     </main>
     <script src="script.js"></script>
 </body>
