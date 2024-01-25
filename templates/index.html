@@ -24,7 +24,7 @@
                     <th scope="col">karakter</th>
                     <th scope="col">Studiepoeng</th>
                     <th scope="col">Dato</th>
-                    
+
                 </tr>
             </thead>
             <tbody>
@@ -39,18 +39,35 @@
                 {% endfor %}
             </tbody>
         </table>
-        <!-- TODO: implement buttons
         <br>
-        <div class="text-center">
+        <section class="text-center">
             <div class="btn-group" role="group">
-                <button id="addButton" type="button" class="btn btn-success">Legg til</button>
-                <button id="editButton" type="button" class="btn btn-primary">Endre</button>
-                <button id="removeButton" type="button" class="btn btn-danger">Fjern</button>
+                <button id="showAddForm" type="button" class="btn btn-primary">Legg til</button>
+                <button id="showRemoveForm" type="button" class="btn btn-danger">Fjern</button>
             </div>
-        </div>
-        -->
+            <div id="addSection" style="display:none;">
+                <form id="addForm" action="/add" method="post">
+                    <input type="text" name="Emnekode" placeholder="Emnekode">
+                    <input type="text" name="Emnenavn" placeholder="Emnenavn">
+                    <input type="text" name="karakter" placeholder="karakter">
+                    <input type="number" name="Studiepoeng" placeholder="Studiepoeng">
+                    <input type="date" name="Dato" placeholder="Dato">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+            <div id="removeSection" style="display:none;">
+                <form id="removeForm" action="/remove" method="post">
+                    <input type="text" name="Emnekode" placeholder="Emnekode to remove">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+            <br>
+        </section>
+        <footer>
+            
+        </footer>
     </main>
-    <script src="script.js"></script>
+    <script src="static/script.js"></script>
 </body>
 
 </html>
