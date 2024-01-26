@@ -52,3 +52,7 @@ def remove_grade():
     conn.commit()
     conn.close()
     return redirect(url_for('index_html'))
+
+
+if __name__ == '__main__':
+    app.run(debug=True, use_reloader=True)

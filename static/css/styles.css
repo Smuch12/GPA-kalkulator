@@ -13,3 +13,6 @@ table.table td {
 table.table thead th {
     font-size: 1em; 
 }
+#gpaResult {
+    font-weight: bold;
+}
