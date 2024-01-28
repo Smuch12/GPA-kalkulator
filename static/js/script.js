@@ -1,3 +1,6 @@
+import { calculateGPA, calculateUIBGPA } from './calculateGrade.js';
+
+
 document.getElementById('showAddForm').addEventListener('click', function () {
     var addSection = document.getElementById('addSection');
     var removeSection = document.getElementById('removeSection');
@@ -28,42 +31,15 @@ function getColumn(index) {
     return columnData;
 }
 
-function getGradeValue(grade) {
-    switch (grade.toUpperCase()) {
-        case 'A': return 5;
-        case 'B': return 4;
-        case 'C': return 3;
-        case 'D': return 2;
-        case 'E': return 1;
-        case 'F': return 0;
-        case 'BESTÅTT': return null;
-        default: return -1;
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const button = document.getElementById('buttonGPA');
+    if (button) {
+        button.addEventListener('click', displayGPA);
     }
-}
-function calculateNTNUGPA(courseObject) {
-    let sum = 0;
-    let totalCredits = 0;
+});
 
-    for (let course in courseObject) {
-        let gradeValue = getGradeValue(courseObject[course].grade);
-        let credit = parseFloat(courseObject[course].credit);
-        if (gradeValue === null)
-            continue;
-        if (gradeValue < 0) {
-            console.error("Ugyldig karakter");
-            continue;
-        }
-        sum += gradeValue * credit;
-        totalCredits += credit;
-    }
-    return (sum / totalCredits).toFixed(2);
-}
-
-function calculateUIBGPA(courseObject){
-    return 0;
-}
-
-function calculateGPA() {
+ function displayGPA() {
     let courceCode = getColumn(0).map(code => code.replace(/<\/?b>/g, ''));
     let grades = getColumn(2);
     let credits = getColumn(3);
@@ -72,8 +48,9 @@ function calculateGPA() {
     for (let i = 0; i < courceCode.length; i++) {
         courceObject[courceCode[i]] = { grade: grades[i], credit: credits[i] };
     }
-    let ntnuGrade = calculateNTNUGPA(courceObject);
-
-    document.getElementById('gpaResult').innerHTML = `Snittet ditt er ${ntnuGrade}`;
+    let ntnuGrade = calculateGPA(courceObject);
+    let uibGrade = calculateUIBGPA(courceObject);
+    document.getElementById('gpaResult').innerHTML = `Snittet ditt er:  ${ntnuGrade} for NTNU, og ${uibGrade} for UIB`;
 }
+
 
