@@ -40,7 +40,9 @@ function compareGrades(grade1, grade2) {
     return index1 - index2;
 }
 /**
- *
+ * Delete list of courses from another list of courses
+ * @param{CourseRecord} original
+ * @param{CourseRecord} toDelete
  * */
 function deleteSelected(original, toDelete){
     for (let courseCode in toDelete) {

@@ -19,6 +19,13 @@ document.getElementById('showRemoveForm').addEventListener('click', function () 
     }
 });
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    const button = document.getElementById('buttonGPA');
+    if (button) {
+        button.addEventListener('click', displayGPA);
+    }
+});
+
 function getColumn(index) {
     let table = document.getElementById('gradeTable');
     let rows = table.rows;
@@ -27,29 +34,20 @@ function getColumn(index) {
         let cell = rows[i].cells[index];
         columnData.push(cell.innerHTML);
     }
-
     return columnData;
 }
 
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('buttonGPA');
-    if (button) {
-        button.addEventListener('click', displayGPA);
-    }
-});
-
  function displayGPA() {
-    let courceCode = getColumn(0).map(code => code.replace(/<\/?b>/g, ''));
+    let courseCode = getColumn(0).map(code => code.replace(/<\/?b>/g, ''));
     let grades = getColumn(2);
     let credits = getColumn(3);
-    let courceObject = {};
+    let courseObject = {};
 
-    for (let i = 0; i < courceCode.length; i++) {
-        courceObject[courceCode[i]] = { grade: grades[i], credit: credits[i] };
+    for (let i = 0; i < courseCode.length; i++) {
+        courseObject[courseCode[i]] = { grade: grades[i], credit: credits[i] };
     }
-    let ntnuGrade = calculateGPA(courceObject);
-    let uibGrade = calculateUIBGPA(courceObject);
+    let ntnuGrade = calculateGPA(courseObject);
+    let uibGrade = calculateUIBGPA(courseObject);
     document.getElementById('gpaResult').innerHTML = `Snittet ditt er:  ${ntnuGrade} for NTNU, og ${uibGrade} for UIB`;
 }
 
