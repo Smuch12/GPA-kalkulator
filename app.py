@@ -1,4 +1,4 @@
-import os, sqlite3
+import os, sqlite3, time
 
 from flask import (
     Flask,
@@ -16,10 +16,22 @@ app = Flask(
 )
 db_path = os.path.join(APP_PATH, 'db', 'Grades.db')
 
+def get_db_connection():
+    retries = 5
+    for _ in range(retries):
+        try:
+            conn = sqlite3.connect(db_path, timeout=10)
+            return conn
+        except sqlite3.OperationalError as e:
+            if "database is locked" in str(e):
+                time.sleep(1)
+            else:
+                raise
+    raise sqlite3.OperationalError("Maximum retries reached, database is still locked")
 
 @app.get("/")
 def index_html():
-    conn = sqlite3.connect(db_path)
+    conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
 
@@ -32,7 +44,7 @@ def index_html():
 
 @app.route('/add', methods=['POST'])
 def add_grade():
-    conn = sqlite3.connect(db_path)
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("INSERT INTO KARAKTERER (Emnekode, Emnenavn, karakter, Studiepoeng, Dato) VALUES (?, ?, ?, ?, ?)",
               (request.form['Emnekode'],
@@ -47,7 +59,7 @@ def add_grade():
 
 @app.route('/remove', methods=['POST'])
 def remove_grade():
-    conn = sqlite3.connect(db_path)
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute("DELETE FROM KARAKTERER WHERE Emnekode = ?", (request.form['Emnekode'],))
     conn.commit()
