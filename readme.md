@@ -1,10 +1,7 @@
 # GPA kalkulator
 
-## Install prosjektet
-
+## Install the project:
 ```bash
-py -3 -m venv .venv
-.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -14,8 +11,4 @@ pip install -r requirements.txt
 flask --app app.py --debug run
 ```
 
-## To run test:
-
-```bash
-npm test
-```
+then open at: `http://127.0.0.1:5000`.
