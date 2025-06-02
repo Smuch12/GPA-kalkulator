@@ -1,5 +1,5 @@
 //Test1 => 4.0
-let test1 = {
+export const test1 = {
     "MAT101": {"grade": "Bestått", "credit": "10"},
     "INF140": {"grade": "A", "credit": "10"},
     "INF100": {"grade": "B", "credit": "10"},
@@ -20,7 +20,7 @@ let test1 = {
 
 
 //Test1 => 4.4
-const test2 =  {
+export const test2 =  {
     "MATXYZ": { "grade": "C", "credit": "10" },
     "MAT111": { "grade": "B", "credit": "10" },
     "INF100": { "grade": "A", "credit": "10" },
@@ -31,12 +31,12 @@ const test2 =  {
     "INF122": { "grade": "B", "credit": "10" }
 }
 
-const correct1 =  {
+export const correct1 =  {
     "INF140": {"grade": "A", "credit": "10"},
     "INF115": {"grade": "A", "credit": "10"}
 }
 
-const correct2 =  {
+export const correct2 =  {
     "INF100": { "grade": "A", "credit": "10" },
     "MNF130": { "grade": "A", "credit": "10" },
     "INF101": { "grade": "A", "credit": "10" },
@@ -44,7 +44,7 @@ const correct2 =  {
 }
 
 //Test1 => 4.6
-const test3 = {
+export const test3 = {
     "MATÆØÅ": { "grade": "Bestått", "credit": "10" },
     "MAT111": { "grade": "B", "credit": "10" },
     "INF100": { "grade": "A", "credit": "10" },
@@ -54,5 +54,3 @@ const test3 = {
     "INF115": { "grade": "B", "credit": "10" },
     "INF122": { "grade": "B", "credit": "10" }
 }
-
-module.exports = {test1, test2, correct1, correct2, test3};

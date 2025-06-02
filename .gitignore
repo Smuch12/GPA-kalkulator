@@ -157,8 +157,8 @@ cython_debug/
 #.idea/
 
 #ignore db
-*.db
-db/
+db/*.db
+!db/Grades.db
 
 node_modules/
 
