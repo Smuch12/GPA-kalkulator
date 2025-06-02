@@ -120,13 +120,10 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
-.venv
-env/
+.venv/
 venv/
+env/
 ENV/
-env.bak/
-venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -160,4 +157,10 @@ cython_debug/
 #.idea/
 
 #ignore db
-/db/*.db
+*.db
+db/
+
+node_modules/
+
+.idea/
+*.iml

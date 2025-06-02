@@ -121,6 +121,7 @@ function bestCourses(courses, totalCredit) {
             credit: parseInt(value.credit, 10)
         };
     }
+    
     let selectedCourses = {};
     let enoughCredit = 0;
     for (let i = 0; i < coursesArray.length; i++) {
