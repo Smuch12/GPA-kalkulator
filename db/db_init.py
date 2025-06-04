@@ -1,12 +1,13 @@
-import sqlite3
 import os
-
-DB_PATH = os.path.join(os.path.dirname(__file__), "Grades.db")
+import sqlite3
+from app.config import DB_PATH
 
 def initialize_database():
     conn = sqlite3.connect(DB_PATH)
-    with open(os.path.join(os.path.dirname(__file__), "schema.sql")) as f:
-        conn.executescript(f.read())
+    schema_path = os.path.join(os.path.dirname(__file__), "schema.sql")
+    if os.path.exists(schema_path):
+        with open(schema_path) as f:
+            conn.executescript(f.read())
     conn.commit()
     conn.close()
 
