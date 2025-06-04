@@ -9,12 +9,9 @@ from flask import (
     request,
     current_app as app
 )
+from .config import DB_PATH
 
 bp = Blueprint("main", __name__)
-
-# Centralised database path import. Changing the path in ``app.config`` updates
-# it for the whole application.
-from .config import DB_PATH
 
 def get_db_connection():
     retries = 5
