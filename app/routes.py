@@ -1,4 +1,6 @@
-import os, sqlite3, time
+import os
+import sqlite3
+import time
 from flask import (
     Blueprint,
     render_template,
@@ -10,7 +12,9 @@ from flask import (
 
 bp = Blueprint("main", __name__)
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "../db/Grades.db")
+# Centralised database path import. Changing the path in ``app.config`` updates
+# it for the whole application.
+from .config import DB_PATH
 
 def get_db_connection():
     retries = 5
