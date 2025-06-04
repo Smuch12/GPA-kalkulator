@@ -222,4 +222,3 @@ export function calculateUIBGPA(courses) {
     }
     return calculateGPA(finalCourses);
 }
-
