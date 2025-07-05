@@ -12,8 +12,8 @@
 /**
  * Convert grade to number
  * @param {string} grade - Grade to convert.
- * @returns {int} number representing the grade.
- **/
+ * @returns {number|null} Grade value
+ */
 function getGradeValue(grade) {
     switch (grade.toUpperCase()) {
         case 'A': return 5;
@@ -41,10 +41,10 @@ function compareGrades(grade1, grade2) {
 }
 /**
  * Delete list of courses from another list of courses
- * @param{CourseRecord} original
- * @param{CourseRecord} toDelete
- * */
-function deleteSelected(original, toDelete){
+ * @param {CourseRecord} original
+ * @param {CourseRecord} toDelete
+ */
+function deleteSelected(original, toDelete) {
     for (let courseCode in toDelete) {
         if (original[courseCode]) {
             delete original[courseCode];
@@ -54,9 +54,9 @@ function deleteSelected(original, toDelete){
 
 /**
  * Get course which is last in CourseRecord
- * @param{CourseRecord} courses
- * @returns{Course}
- * */
+ * @param {CourseRecord} courses
+ * @returns {Course}
+ */
 function getLastCourse(courses) {
     const keys = Object.keys(courses);
     const lastKey = keys[keys.length - 1];
@@ -65,9 +65,10 @@ function getLastCourse(courses) {
 
 /**
  * Find courseCode given course
- * @param{CourseRecord} courses
- * @param{Course} course
- * */
+ * @param {CourseRecord} courses
+ * @param {Course} course
+ * @returns {string|undefined}
+ */
 function findKeyByValue(courses, course) {
     return Object.keys(courses).find(key =>
         JSON.stringify(courses[key]) === JSON.stringify(course));
@@ -76,10 +77,10 @@ function findKeyByValue(courses, course) {
 
 /**
  *
- * @param{CourseRecord} courses
- * @param{string} courseCode
- * @returns{CourseRecord} Return courses containing given course code.
- * */
+ * @param {CourseRecord} courses
+ * @param {string} courseCode
+ * @returns {CourseRecord} Return courses containing given course code.
+ */
 function divideCourses(courses, courseCode) {
     let filteredCourses = {};
     for (const key in courses) {
@@ -93,9 +94,9 @@ function divideCourses(courses, courseCode) {
 /**
  * Given the record of courses, select best courses till it meet total credits.
  *
- * @param{CourseRecord} courses
- * @param{int} totalCredit
- * @returns{CourseRecord}
+ * @param {CourseRecord} courses
+ * @param {number} totalCredit
+ * @returns {CourseRecord}
  *
  * @example
  *  courses = {
@@ -108,7 +109,7 @@ function divideCourses(courses, courseCode) {
  *
  *  bestCourses(courses, 15);
  *  //Output 2:  {"INF100": { "grade": "A", "credit": "10" }, "INF101": {"grade": "B", "credit": "10"}}
- **/
+ */
 function bestCourses(courses, totalCredit) {
     let coursesArray = Object.entries(courses);
     coursesArray.sort((a, b) => {
@@ -121,7 +122,7 @@ function bestCourses(courses, totalCredit) {
             credit: parseInt(value.credit, 10)
         };
     }
-    
+
     let selectedCourses = {};
     let enoughCredit = 0;
     for (let i = 0; i < coursesArray.length; i++) {
@@ -138,9 +139,9 @@ function bestCourses(courses, totalCredit) {
 
 /**
  * Calculate GPA of your grades
- * @param{CourseRecord} courses
- * @returns{float} Average grade
- **/
+ * @param {CourseRecord} courses
+ * @returns {number} Average grade
+ */
 export function calculateGPA(courses) {
     let sum = 0;
     let totalCredits = 0;
@@ -156,7 +157,7 @@ export function calculateGPA(courses) {
         sum += gradeValue * credit;
         totalCredits += credit;
     }
-    return (sum / totalCredits).toFixed(1);
+    return parseFloat((sum / totalCredits).toFixed(1));
 }
 
 /**
@@ -176,46 +177,46 @@ export function calculateGPA(courses) {
  *  STAT1110 = E
  * Then MAT121 and MAT101 will be picked, but only MAT121 will count on the GPA since MAT101 has code "BESTÅTT"
  *
- * @param{CourseRecord} courses
- * @returns{float}
- * */
+ * @param {CourseRecord} courses
+ * @returns {number}
+ */
 export function calculateUIBGPA(courses) {
     //Divide courses by type: INF, MATH, Rest
-    let INFCourses = {...divideCourses(courses, "INF"), ...divideCourses(courses, "MNF")};
-    let MATCourses = {...divideCourses(courses, "MAT"), ...divideCourses(courses, "STAT")};
+    let INFCourses = { ...divideCourses(courses, "INF"), ...divideCourses(courses, "MNF") };
+    let MATCourses = { ...divideCourses(courses, "MAT"), ...divideCourses(courses, "STAT") };
     //Choose best courses in each:
     let bestMath = bestCourses(MATCourses, 15);
     let bestINF = bestCourses(INFCourses, 40);
     //Delete to avoid duplication
-    let selectedCourses = {...bestINF, ...bestMath};
+    let selectedCourses = { ...bestINF, ...bestMath };
     deleteSelected(courses, selectedCourses);
     //Select rest
     let anyCourses = bestCourses(courses, 25);
-    let finalCourses = {...selectedCourses, ...anyCourses};
+    let finalCourses = { ...selectedCourses, ...anyCourses };
     deleteSelected(courses, finalCourses);
     //Courses that is graded as "Bestått"
     let bestattCourses = {}
-    for(let courseCode in courses){
-        if(courses[courseCode].grade == 'Bestått'){
+    for (let courseCode in courses) {
+        if (courses[courseCode].grade == 'Bestått') {
             bestattCourses[courseCode] = courses[courseCode];
         }
     }
     //Courses that is lower than C, which can be deleted.
-    let canBeDelete= {};
-    for(let courseCode in finalCourses){
-        if(getGradeValue(finalCourses[courseCode].grade) < 3){
+    let canBeDelete = {};
+    for (let courseCode in finalCourses) {
+        if (getGradeValue(finalCourses[courseCode].grade) < 3) {
             canBeDelete[courseCode] = finalCourses[courseCode];
         }
     }
-    if(!(Object.keys(bestattCourses).length === 0)){
+    if (!(Object.keys(bestattCourses).length === 0)) {
         let toDelete = {};
-        for(let courseCode in bestattCourses){
-            if(courseCode.startsWith("MAT") || courseCode.startsWith("STAT")){
-                toDelete[findKeyByValue(bestMath, getLastCourse(bestMath))]  = getLastCourse(bestMath);
-            }else if(courseCode.startsWith("INF")){
-                toDelete[findKeyByValue(bestINF, getLastCourse(bestINF))]= getLastCourse(bestINF);
-            }else{
-                toDelete[findKeyByValue(anyCourses, getLastCourse(anyCourses))]= getLastCourse(anyCourses);
+        for (let courseCode in bestattCourses) {
+            if (courseCode.startsWith("MAT") || courseCode.startsWith("STAT")) {
+                toDelete[findKeyByValue(bestMath, getLastCourse(bestMath))] = getLastCourse(bestMath);
+            } else if (courseCode.startsWith("INF")) {
+                toDelete[findKeyByValue(bestINF, getLastCourse(bestINF))] = getLastCourse(bestINF);
+            } else {
+                toDelete[findKeyByValue(anyCourses, getLastCourse(anyCourses))] = getLastCourse(anyCourses);
             }
         }
         deleteSelected(finalCourses, toDelete);
